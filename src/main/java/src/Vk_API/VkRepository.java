@@ -17,8 +17,8 @@ import java.util.HashMap;
 
 public class VkRepository {
     HashMap<String, ArrayList<String>> studentInfo = new HashMap<String, ArrayList<String>>();
-    private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.9gRxuHY2UrKP2c9RiAMIIzyKNuFY86sLA5lgzcx9nJ4peDxIstZ3jB3-vUg4czKDq54FVmaosiuBQdW5mXT6Skqxj_ytSUTFlIGpyzIv4GrfMv24auxk25Kv14FBON5642hRgZm5T6d5VKn4BnzyvHmTDojpNIQNZBUvV5lri9VbfHtdEl_FCxBJ1B5PgFWD";
+    private final int APP_ID = 0;
+    private final String CODE = "";
     private final VkApiClient vk;
     private final UserActor actor;
 
