@@ -20,8 +20,8 @@ import java.util.Map;
 
 public class VkRepository {
     public  Map<String, String> studentInfo = new HashMap<>();
-    private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.RUnfBAwEwzCvk3mEuTh5P-kh8n6aceODwizXB8dNYvHrcElXP_EAxXcvJ60mAlHyUWCFKs7mPT2PFImvoF0t42sPwQNGgTqap6cNPaIGsWWS4EmqN5VQ6UI8btTXKh2VJ_hUKJPV0ANPG_V4mYcnqCNC9GqRF3KMNYr5gNKqqdmpAjAOXTJbufUR_6hkH2vX";
+    private final int APP_ID = 0;
+    private final String CODE = "";
     private final VkApiClient vk;
     private final UserActor actor;
 
