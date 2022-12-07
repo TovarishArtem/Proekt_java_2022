@@ -16,6 +16,8 @@ public class TypeTask {
         String[] str = typeTask.split(":");
         String type = str[0];
         String type1 = type.toUpperCase();
+
+        String line = "УПР";
         switch (type1) {
 
             case "АКТ" -> {
@@ -43,6 +45,7 @@ public class TypeTask {
                 throw new IllegalArgumentException("Данный тип заданий отсутствует!");
 
             }
+
         }
     }
 

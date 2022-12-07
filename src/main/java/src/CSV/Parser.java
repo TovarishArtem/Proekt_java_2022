@@ -19,11 +19,13 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Parser {
 
     public static HashMap<String, ArrayList<String>> getReport(String path) throws IOException, ClientException, ApiException {
         Scanner sc = getScanner(path);
+
         var headersOfModules = sc.nextLine().split(";"); // название модулей
         var headersOfExercises = sc.nextLine().split(";"); // название упражнений и домашних работ
         var headersOfMaxScores = sc.nextLine().split(";"); // макс. значения
@@ -36,12 +38,13 @@ public class Parser {
             var name = headersOfScoresStudent[0];
 
             Student stud = new Student(name);
-            VkRepository vk = new VkRepository();
+
 
             j++;
             getTasksLists(headersOfExercises, headersOfScoresStudent, stud, student);
 
         }
+        VkRepository vkRepository = new VkRepository();
 
         return student;
 
