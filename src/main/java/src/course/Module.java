@@ -68,4 +68,9 @@ public class Module {
     public void setSeminarsScore(int seminarsScore) {
         this.seminarsScore = seminarsScore;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Максимальные баллы за семинары: %s, Максимальные баллы за активности: %s, Максимальные баллы за упражнения: %s, Максимальные баллы за домашнии задания %s", seminarsScore,  activitesScore, excerciseScore, homeworkScore);
+    }
 }

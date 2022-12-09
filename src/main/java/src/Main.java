@@ -7,16 +7,15 @@ import com.vk.api.sdk.objects.groups.Group;
 import com.vk.api.sdk.objects.users.User;
 import src.CSV.Parser;
 import src.Vk_API.VkRepository;
+import src.course.Course;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClientException, ApiException, InterruptedException {
-        List<String> nameStudent = new ArrayList<>();
+
+        Set<String> nameStudent = new LinkedHashSet<>();
         VkRepository vk = new VkRepository();
 
         var report = Parser.getReport("C:\\Program Files\\gradle\\gradle\\src\\proektt\\basicprogramming_2.csv");
@@ -33,7 +32,18 @@ public class Main {
                 }
             }
         }
-        var map =  vk.report(nameStudent);
+        System.out.println();
+        var map = vk.report(nameStudent);
         vk.getReport(map);
+       /*var modules = Parser.getReport1("C:\\Program Files\\gradle\\gradle\\src\\proektt\\basicprogramming_2.csv");
+       for (var i : modules){
+            System.out.println(i.getName());
+
+            System.out.println(i.toString());
+            for (var task : i.getTasks()){
+                System.out.println(task.toString());
+            }
+       }*/
+
     }
 }

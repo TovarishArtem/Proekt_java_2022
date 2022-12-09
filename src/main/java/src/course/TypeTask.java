@@ -14,39 +14,39 @@ public class TypeTask {
     private String nameTask;
     public TypeTask(String typeTask) {
         String[] str = typeTask.split(":");
+
         String type = str[0];
         String type1 = type.toUpperCase();
+        if (str.length >= 2){
+            switch (type1) {
 
-        String line = "УПР";
-        switch (type1) {
-
-            case "АКТ" -> {
-                this.typeTask = enumType.ACTIVITIES;
-                this.nameTask = "Акт";
+                case  "АКТ" -> {
+                    this.typeTask = enumType.ACTIVITIES;
+                    this.nameTask = typeTask;
+                }
+                case "УПР" -> {
+                    this.typeTask = enumType.EXERCISE;
+                    this.nameTask = typeTask;
+                }
+                case "ДЗ" -> {
+                    this.typeTask = enumType.HOMEWORK;
+                    this.nameTask = typeTask;
+                }
+                case "СЕМ" -> {
+                    this.typeTask = enumType.SEMESTER;
+                    this.nameTask = typeTask;
+                }
+                case "ДОП" -> {
+                    this.typeTask = enumType.ADDITIONAL;
+                    this.nameTask = typeTask;
+                }
+                default -> {
+                    this.nameTask = null;
+                    throw new IllegalArgumentException("Ошибка");
+                }
             }
-            case "УПР" -> {
-                this.typeTask = enumType.EXERCISE;
-                this.nameTask = "Упр";
-            }
-            case "ДЗ" -> {
-                this.typeTask = enumType.HOMEWORK;
-                this.nameTask = "ДЗ";
-            }
-            case "СЕМ" -> {
-                this.typeTask = enumType.SEMESTER;
-                this.nameTask = "Сем";
-            }
-            case "ДОП" -> {
-                this.typeTask = enumType.ADDITIONAL;
-                this.nameTask = "Доп";
-            }
-            default -> {
-                this.nameTask = "Ошибка";
-                throw new IllegalArgumentException("Данный тип заданий отсутствует!");
-
-            }
-
         }
+        else this.nameTask = "Ошибка";
     }
 
     public enumType getTypeTask() {

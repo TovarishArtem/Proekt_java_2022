@@ -8,20 +8,18 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.base.City;
 import com.vk.api.sdk.objects.base.Sex;
 import com.vk.api.sdk.objects.groups.*;
+import com.vk.api.sdk.objects.users.Fields;
 import com.vk.api.sdk.objects.users.UserFull;
 import src.Person.Person;
 import src.course.TypeTask;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VkRepository {
-    public  Map<String, String> studentInfo = new HashMap<>();
+    public  SortedMap<String, String> studentInfo = new TreeMap<>();
     private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.RUnfBAwEwzCvk3mEuTh5P-kh8n6aceODwizXB8dNYvHrcElXP_EAxXcvJ60mAlHyUWCFKs7mPT2PFImvoF0t42sPwQNGgTqap6cNPaIGsWWS4EmqN5VQ6UI8btTXKh2VJ_hUKJPV0ANPG_V4mYcnqCNC9GqRF3KMNYr5gNKqqdmpAjAOXTJbufUR_6hkH2vX";
+    private final String CODE = "vk1.a.DSvDCq-7NM7_I8E3yQ2IQv0GMANK16dyNcJFNdMR0wXVuxke1FkObeVB7UaJayVr4ENF2jVC42AJjrzIbEpgonSvUA3uch7hfAmaPs8b07Pr1eH80M3tF4xd5EIoInT9gS50ktfJnt8IyMg4pxqIActVfGNSLK-IEqyBmC1-Pywda1M41YjnBQ_wV2c1BBuF";
     private final VkApiClient vk;
     private final UserActor actor;
 
@@ -32,57 +30,77 @@ public class VkRepository {
         actor = new UserActor(APP_ID, CODE);
     }
 
-    public Group gitIDpublic() throws ClientException, ApiException {
+    public Group firstGetIDpubli() throws ClientException, ApiException {
         String groupFirst = "Уральский федеральный университет | УрФУ";
         return vk.groups()
                 .search(actor, groupFirst)
                 .execute()
                 .getItems()
                 .get(0);
-        }
+    }
+    public Group secondGetIDpublic() throws ClientException, ApiException {
+        String groupFirst = "СОЮЗ СТУДЕНТОВ ИРИТ-РТФ УрФУ";
+        return vk.groups()
+                .search(actor, groupFirst)
+                .execute()
+                .getItems()
+                .get(0);
+    }
 
-    public UserFull getId(Group group, String name) throws ClientException, ApiException, InterruptedException {
-
-        UserFull result = vk.users()
+    public UserFull getId(Group group1,Group group2, String name) throws ClientException, ApiException, InterruptedException {
+        String name1[] = name.split(" ");
+        if (name1.length == 2){
+            String refersName = String.format("%s %s", name1[1], name1[0]);
+            UserFull result = vk.users()
                     .search(actor)
                     .q(name)
-                    .groupId(group.getId())
+                    .q(refersName)
+                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
+                    .groupId(group1.getId())
+                    .groupId(group2.getId())
                     .count(1)
                     .execute()
                     .getItems()
                     .stream()
                     .findFirst()
                     .orElse(null);
-        Thread.sleep(300);
+            Thread.sleep(250);
+            return result;
+        }
 
-
-    return result;
-
-    }
-    public City getCityOfStudent(Group group, String name) throws ClientException, ApiException, InterruptedException {
 
         UserFull result = vk.users()
                 .search(actor)
                 .q(name)
-                .groupId(group.getId())
+                .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
+                .groupId(group1.getId())
+                .groupId(group2.getId())
                 .count(1)
                 .execute()
                 .getItems()
                 .stream()
                 .findFirst()
                 .orElse(null);
+        Thread.sleep(250);
+
+
+        return result;
+
+    }
+    public String getCityOfStudent(UserFull result) throws ClientException, ApiException, InterruptedException {
+
 
         if (result == null){
             return null;
 
         }
         else {
-            if (result.getCity() == null) {
+            if (result.getCity()== null) {
                 return null;
 
             }
             else {
-                return result.getCity();
+                return result.getCity().getTitle();
 
             }
         }
@@ -98,11 +116,11 @@ public class VkRepository {
             return null;
         }
         else {
-            if (result.getCity() == null) {
+            if (result.getBdate() == null) {
                 return "-";
             }
             else{
-                return  new SimpleDateFormat("dd.MM.yyyy").format(result.getBdate());
+                return  (result.getBdate());
             }
         }
 
@@ -110,7 +128,7 @@ public class VkRepository {
 
 
     }
-    public Sex getSex(UserFull result) throws ClientException, ApiException, InterruptedException {
+    public String getSex(UserFull result) throws ClientException, ApiException, InterruptedException {
 
 
 
@@ -119,32 +137,32 @@ public class VkRepository {
             return null;
         }
         else {
-            if (result.getCity() == null) {
+            if (result.getSex() == null) {
                 return null;
             }
-            else return result.getSex();
+            else return result.getSex().name();
         }
 
 
 
     }
-   public Map report(List<String> students) throws ClientException, ApiException, InterruptedException {
-       Group group = gitIDpublic();
-
+    public SortedMap<String, String> report(Set<String> students) throws ClientException, ApiException, InterruptedException {
+        Group group1 = firstGetIDpubli();
+        Group group2 = secondGetIDpublic();
         for (var name : students){
 
-            UserFull user =  getId(group, name);
+            UserFull user =  getId(group1,group2,  name);
 
             String line = null;
             Person person= null;
             if (user == null){
                 String nameVk = String.format("Студент < %s > не найден в ВК ", name);
-                person = new Person(nameVk,  getSex(user) , getCityOfStudent(group, name), getBdate(user) );
+                person = new Person(nameVk,  getSex(user) , getCityOfStudent(user), getBdate(user) );
 
             }
 
             else{
-                person = new Person(name, getSex(user) , getCityOfStudent(group, name), getBdate(user) );
+                person = new Person(name, getSex(user) , getCityOfStudent(user), getBdate(user) );
 
 
             }
@@ -164,7 +182,7 @@ public class VkRepository {
 
 
 
-                System.out.println(i);
+            System.out.println(i);
 
 
 

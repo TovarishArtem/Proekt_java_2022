@@ -12,11 +12,11 @@ enum Gender{
 
 public class Person {
     private String fullName;
-    private Sex gender;
-    private City homeAddress;
+    private String gender;
+    private String homeAddress;
     private String birthDate;
 
-     public Person(String fullname , Sex gender, City homeAddress, String birthDate) {
+     public Person(String fullname , String gender, String homeAddress, String birthDate) {
        /* public Person(String fullname) {*/
 
 
@@ -41,19 +41,19 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public Sex getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Sex gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public City getHomeAddress() {
+    public String getHomeAddress() {
         return homeAddress;
     }
 
-    public void setHomeAddress(City homeAddress) {
+    public void setHomeAddress(String homeAddress) {
         this.homeAddress = homeAddress;
     }
 

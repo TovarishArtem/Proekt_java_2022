@@ -35,4 +35,9 @@ public class Task {
     public void setMaxScore(int maxScore) {
         this.maxScore = maxScore;
     }
+
+    @Override
+    public String toString() {
+        return String.format(" %s, %s", getName(), getMaxScore());
+    }
 }
