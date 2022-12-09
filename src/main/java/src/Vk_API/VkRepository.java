@@ -18,8 +18,8 @@ import java.util.*;
 
 public class VkRepository {
     public  SortedMap<String, String> studentInfo = new TreeMap<>();
-    private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.DSvDCq-7NM7_I8E3yQ2IQv0GMANK16dyNcJFNdMR0wXVuxke1FkObeVB7UaJayVr4ENF2jVC42AJjrzIbEpgonSvUA3uch7hfAmaPs8b07Pr1eH80M3tF4xd5EIoInT9gS50ktfJnt8IyMg4pxqIActVfGNSLK-IEqyBmC1-Pywda1M41YjnBQ_wV2c1BBuF";
+    private final int APP_ID = 0;
+    private final String CODE = "";
     private final VkApiClient vk;
     private final UserActor actor;
 
