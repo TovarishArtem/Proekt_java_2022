@@ -18,8 +18,8 @@ import java.util.*;
 
 public class VkRepository {
     public  SortedMap<String, Person> studentInfo = new TreeMap<>();
-    private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.YMqvuE-XZlBH4Uf2RolyXTaV3GXDs09x55VS5em-I0NZojeki85OYKOmc4n5YYF5ImtOfcAezN1_Vmo7Ygv9imQQMdzkYJf9RbVB7xkBHyViJL_p41E31VRaFwZ7eSjmcmWcuOWj-tPLhT8yjG-FAKeleFtw3nIKIlZyhaoqsc37m_lQm3ToBfV2CGAQNnPN";
+    private final int APP_ID = 0;
+    private final String CODE = "";
     private final VkApiClient vk;
     private final UserActor actor;
 
@@ -64,7 +64,7 @@ public class VkRepository {
                     .stream()
                     .findFirst()
                     .orElse(null);
-            Thread.sleep(250);
+            Thread.sleep(270);
             return result;
         }
 

@@ -11,6 +11,7 @@ import src.Person.Person;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedMap;
 
 public class DBRepository {
@@ -36,11 +37,11 @@ public class DBRepository {
         }
     }
 
-    public List<DBEntity> getPlayers() throws SQLException {
+    public List<DBEntity> getStudents() throws SQLException {
         return studentDao.queryForAll();
     }
 
-    public List<DBEntity> getPlayersByName(String name) throws SQLException {
+    public List<DBEntity> getStudentsByName(String name) throws SQLException {
         return studentDao.queryBuilder()
                 .where()
                 .eq(DBEntity.NAME_COLUMN, name)

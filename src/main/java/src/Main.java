@@ -1,17 +1,10 @@
 package src;
 
 
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import com.vk.api.sdk.objects.groups.Group;
-import com.vk.api.sdk.objects.users.User;
 import src.CSV.Parser;
 import src.DataBase.DBRepository;
 import src.Vk_API.VkRepository;
-import src.course.Course;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
@@ -47,10 +40,12 @@ public class Main {
             }
        }*/
         DBRepository dbRepository = new DBRepository();
-        dbRepository.connect();
-        dbRepository.createTable();
-        dbRepository.saveStudents(map);
 
-        dbRepository.close();
+        dbRepository.connect();
+        /*dbRepository.createTable();
+        dbRepository.saveStudents(map);*/
+        System.out.println(dbRepository.getStudents());
+        System.out.println(dbRepository.getStudentsByName("Белобородова Полина"));
+       /* dbRepository.close();*/
     }
 }
