@@ -17,9 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VkRepository {
-    public  SortedMap<String, String> studentInfo = new TreeMap<>();
+    public  SortedMap<String, Person> studentInfo = new TreeMap<>();
     private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.DSvDCq-7NM7_I8E3yQ2IQv0GMANK16dyNcJFNdMR0wXVuxke1FkObeVB7UaJayVr4ENF2jVC42AJjrzIbEpgonSvUA3uch7hfAmaPs8b07Pr1eH80M3tF4xd5EIoInT9gS50ktfJnt8IyMg4pxqIActVfGNSLK-IEqyBmC1-Pywda1M41YjnBQ_wV2c1BBuF";
+    private final String CODE = "vk1.a.YMqvuE-XZlBH4Uf2RolyXTaV3GXDs09x55VS5em-I0NZojeki85OYKOmc4n5YYF5ImtOfcAezN1_Vmo7Ygv9imQQMdzkYJf9RbVB7xkBHyViJL_p41E31VRaFwZ7eSjmcmWcuOWj-tPLhT8yjG-FAKeleFtw3nIKIlZyhaoqsc37m_lQm3ToBfV2CGAQNnPN";
     private final VkApiClient vk;
     private final UserActor actor;
 
@@ -95,8 +95,8 @@ public class VkRepository {
 
         }
         else {
-            if (result.getCity()== null) {
-                return null;
+            if (result.getCity() == null) {
+                return "-";
 
             }
             else {
@@ -146,7 +146,7 @@ public class VkRepository {
 
 
     }
-    public SortedMap<String, String> report(Set<String> students) throws ClientException, ApiException, InterruptedException {
+    public SortedMap<String, Person> report(Set<String> students) throws ClientException, ApiException, InterruptedException {
         Group group1 = firstGetIDpubli();
         Group group2 = secondGetIDpublic();
         for (var name : students){
@@ -156,8 +156,8 @@ public class VkRepository {
             String line = null;
             Person person= null;
             if (user == null){
-                String nameVk = String.format("Студент < %s > не найден в ВК ", name);
-                person = new Person(nameVk,  getSex(user) , getCityOfStudent(user), getBdate(user) );
+
+                person = new Person(name,  getSex(user) , getCityOfStudent(user), getBdate(user) );
 
             }
 
@@ -166,7 +166,7 @@ public class VkRepository {
 
 
             }
-            studentInfo.put(name, person.toString());
+            studentInfo.put(name, person);
 
 
         }
@@ -182,7 +182,7 @@ public class VkRepository {
 
 
 
-            System.out.println(i);
+            System.out.println(i.toString());
 
 
 
