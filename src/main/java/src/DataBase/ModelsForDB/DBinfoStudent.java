@@ -2,10 +2,25 @@ package src.DataBase.ModelsForDB;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-public class DBEntity {
+
+@DatabaseTable (tableName = "DBinfoStudent")
+public class DBinfoStudent {
     public static final String NAME_COLUMN = "name";
+
+
     @DatabaseField(generatedId = true)
     private long studentId;
+
+    @DatabaseField(  foreign = true, canBeNull = false,  foreignColumnName = "name", foreignAutoCreate = true )
+    private DBgroups groupId;
+    public long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
+    }
+
 
     @DatabaseField(canBeNull = false)
     private String name;
@@ -19,13 +34,15 @@ public class DBEntity {
     @DatabaseField()
     private String birthDate;
 
-    public DBEntity() { }
+    public DBinfoStudent() { }
 
-    public DBEntity(String name , String gender, String homeAddress, String birthDate) {
+    public DBinfoStudent(String name , String gender, String homeAddress, String birthDate, String groupId) {
         this.name = name;
         this.gender = gender;
         this.homeAddress = homeAddress;
         this.birthDate =  birthDate;
+        this.groupId = new DBgroups(groupId);
+
     }
     public String getName() {
         return name;
@@ -59,12 +76,19 @@ public class DBEntity {
         this.birthDate = birthDate;
     }
 
+    public DBgroups getGroupId() {
+        return groupId;
+    }
 
+    public void setGroupId(DBgroups groupId) {
+        this.groupId = groupId;
+    }
     @Override
     public String toString() {
-        return "PlayerFollowersEntity{" +
-                "playerId=" + studentId +
+        return "DBinfoStudent{" +
+                "studentId=" + studentId +
                 ", name='" + name + '\'' +
+                ", group='" + groupId + '\'' +
                 ", gender=" + gender +
                 ", homeAddress=" + homeAddress +
                 ", birthDate='" + birthDate + '\'' +

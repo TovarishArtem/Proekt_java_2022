@@ -17,9 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VkRepository {
-    public  SortedMap<String, Person> studentInfo = new TreeMap<>();
-    private final int APP_ID = 0;
-    private final String CODE = "";
+    public  LinkedHashMap<String, Person> studentInfo = new LinkedHashMap<>();
+    private final int APP_ID = 51492888;
+    private final String CODE = "vk1.a.hQLWV0Dz4A4HNeB9VF67KInOgVz9SSVuXFWnpgU4_ksunqE1LsvkxGloWaz1IwflYzIBBSRf3lwvtlLZvDQ7rlRNSr2mrt_82Ck7wiczOcD7uW7XGzZTRIYjlZjGXsPN-TsuyHD82rGoOR_ScW04-NK5jcK2ujg5SEyFg5vK9_ON6hmb58-DmczLoWdtiJ-g";
     private final VkApiClient vk;
     private final UserActor actor;
 
@@ -31,42 +31,36 @@ public class VkRepository {
     }
 
     public Group firstGetIDpubli() throws ClientException, ApiException {
+        String groupFirst = "Второй курс ИОТ, УрФУ";
+        return vk.groups()
+                .search(actor, groupFirst)
+                .execute()
+                .getItems()
+                .get(0);
+    }
+    public Group secondGetIDpubli() throws ClientException, ApiException, InterruptedException {
+        Thread.sleep(100);
         String groupFirst = "Уральский федеральный университет | УрФУ";
         return vk.groups()
                 .search(actor, groupFirst)
                 .execute()
                 .getItems()
                 .get(0);
+
     }
-    public Group secondGetIDpublic() throws ClientException, ApiException {
-        String groupFirst = "СОЮЗ СТУДЕНТОВ ИРИТ-РТФ УрФУ";
+    public Group thirdGetIDpubli() throws ClientException, ApiException, InterruptedException {
+        Thread.sleep(100);
+        String groupFirst = "[ТЕ] Типичный Екатеринбург";
         return vk.groups()
                 .search(actor, groupFirst)
                 .execute()
                 .getItems()
                 .get(0);
+
     }
 
-    public UserFull getId(Group group1,Group group2, String name) throws ClientException, ApiException, InterruptedException {
-        String name1[] = name.split(" ");
-        if (name1.length == 2){
-            String refersName = String.format("%s %s", name1[1], name1[0]);
-            UserFull result = vk.users()
-                    .search(actor)
-                    .q(name)
-                    .q(refersName)
-                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
-                    .groupId(group1.getId())
-                    .groupId(group2.getId())
-                    .count(1)
-                    .execute()
-                    .getItems()
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
-            Thread.sleep(270);
-            return result;
-        }
+
+    public UserFull getId(Group group1, Group group2, Group group3, String name) throws ClientException, ApiException, InterruptedException {
 
 
         UserFull result = vk.users()
@@ -74,15 +68,41 @@ public class VkRepository {
                 .q(name)
                 .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
                 .groupId(group1.getId())
-                .groupId(group2.getId())
                 .count(1)
                 .execute()
                 .getItems()
                 .stream()
                 .findFirst()
                 .orElse(null);
-        Thread.sleep(250);
-
+        Thread.sleep(300);
+        if (result == null){
+            Thread.sleep(200);
+            result =  vk.users()
+                    .search(actor)
+                    .q(name)
+                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
+                    .groupId(group2.getId())
+                    .count(1)
+                    .execute()
+                    .getItems()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+        }
+        if (result == null){
+            Thread.sleep(280);
+            return  vk.users()
+                    .search(actor)
+                    .q(name)
+                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
+                    .groupId(group3.getId())
+                    .count(1)
+                    .execute()
+                    .getItems()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+        }
 
         return result;
 
@@ -146,12 +166,14 @@ public class VkRepository {
 
 
     }
-    public SortedMap<String, Person> report(Set<String> students) throws ClientException, ApiException, InterruptedException {
+    public LinkedHashMap<String, Person> report(List<String> students) throws ClientException, ApiException, InterruptedException {
         Group group1 = firstGetIDpubli();
-        Group group2 = secondGetIDpublic();
+        Group group2 = secondGetIDpubli();
+        Group group3 = thirdGetIDpubli();
+
         for (var name : students){
 
-            UserFull user =  getId(group1,group2,  name);
+            UserFull user =  getId(group1, group2, group3,  name);
 
             String line = null;
             Person person= null;

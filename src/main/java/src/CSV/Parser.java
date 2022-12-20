@@ -24,28 +24,34 @@ import java.util.concurrent.TimeUnit;
 
 public class Parser {
 
-    public static LinkedHashMap<String, ArrayList<String>> getReport(String path) throws IOException, ClientException, ApiException {
+    public static LinkedHashMap<Student, ArrayList<String>> getReport(String path) throws IOException, ClientException, ApiException {
         Scanner sc = getScanner(path);
-
+        LinkedHashMap groupsStudents = new LinkedHashMap();
         var headersOfModules = sc.nextLine().split(";"); // название модулей
         var headersOfExercises = sc.nextLine().split(";"); // название упражнений и домашних работ
         var headersOfMaxScores = sc.nextLine().split(";"); // макс. значения
 
-        LinkedHashMap<String, ArrayList<String>> student = new LinkedHashMap<>();
+        LinkedHashMap<Student, ArrayList<String>> student = new LinkedHashMap<>();
+
         while (sc.hasNextLine()) {
             var headersOfScoresStudent = sc.nextLine().split(";"); // имя, оценки студента
 
             var name = headersOfScoresStudent[0];
+            var group =  headersOfScoresStudent[1];
+            Student stud = new Student(name, group);
 
-            Student stud = new Student(name);
-
-
+            groupsStudents.put(name, group);
             getTasksLists(headersOfExercises, headersOfScoresStudent, stud, student);
             getModuleList(headersOfModules, headersOfExercises, headersOfMaxScores);
         }
         VkRepository vkRepository = new VkRepository();
-
+        getGruops(groupsStudents);
         return student;
+
+    }
+    public static LinkedHashMap getGruops(LinkedHashMap groupsStudents){
+        var groups = groupsStudents;
+        return groups;
 
     }
     public static  ArrayList<Module> getReport1(String path) throws IOException, ClientException, ApiException {
@@ -78,7 +84,7 @@ public class Parser {
         return modules;
     }*/
 
-    private static LinkedHashMap<String, ArrayList<String>> getTasksLists(String[] headers2, String[] headers3, Student stud, LinkedHashMap<String, ArrayList<String>> student ){
+    private static LinkedHashMap<Student, ArrayList<String>> getTasksLists(String[] headers2, String[] headers3, Student stud, LinkedHashMap<Student, ArrayList<String>> student ){
         ArrayList<String> taskslist = new ArrayList<String>();
 
         for(int i = 10; i < headers2.length;i++){
@@ -87,11 +93,11 @@ public class Parser {
                 TypeTask tasktype = new TypeTask(headers2[i]);
 
                     Task task = new Task(tasktype.getNameTask(), tasktype.getTypeTask(), Integer.parseInt(headers3[i]));
-                    String str = String.format ("%s:  - %s", task.getName(), task.getMaxScore());
+                    String str = String.format ("%s  - %s", task.getName(), task.getMaxScore());
                     taskslist.add(str);
             }
         }
-        student.put(stud.getStudentName(), taskslist);
+        student.put(stud, taskslist);
 
         return student;
     }
