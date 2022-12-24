@@ -12,6 +12,10 @@ public class Module {
     private int homeworkScore;
     private int seminarsScore;
 
+
+
+
+
     public Module(String name, ArrayList<Task> tasks, int activitesScore, int excerciseScore, int homeworkScore, int seminarsScore) {
         this.name = name;
         this.tasks = tasks;
@@ -68,6 +72,7 @@ public class Module {
     public void setSeminarsScore(int seminarsScore) {
         this.seminarsScore = seminarsScore;
     }
+
 
     @Override
     public String toString() {

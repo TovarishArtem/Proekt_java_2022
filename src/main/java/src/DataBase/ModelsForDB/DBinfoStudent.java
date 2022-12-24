@@ -11,7 +11,7 @@ public class DBinfoStudent {
     @DatabaseField(generatedId = true)
     private long studentId;
 
-    @DatabaseField(  foreign = true, canBeNull = false,  foreignColumnName = "name", foreignAutoCreate = true )
+    @DatabaseField(foreign=true, foreignAutoCreate = true, foreignAutoRefresh = true)
     private DBgroups groupId;
     public long getStudentId() {
         return studentId;

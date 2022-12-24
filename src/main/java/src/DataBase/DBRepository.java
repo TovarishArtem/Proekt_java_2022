@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DBRepository {
-    private final String URL = "jdbc:sqlite:C:\\Users\\artem\\OneDrive\\Рабочий стол\\JAVA база\\base.db";
+    private final String URL = "jdbc:sqlite:rawdata/base.db";
 
     private ConnectionSource connectionSource = null;
 
@@ -55,7 +55,7 @@ public class DBRepository {
                 String d = "аываы";
                 randomWithNextInt = random.nextInt();
                 if (student.getFullName() == name){
-                    studentDao.create(new DBinfoStudent(student.getFullName(), student.getGender(), student.getHomeAddress(), student.getBirthDate(), hashGruop.get(name).getGroup() ));
+                    studentDao.create(new DBinfoStudent(student.getFullName(), student.getGender(), student.getHomeAddress(), student.getBirthDate(), hashGruop.get(name).getGroup()) );
                 }
 
 
@@ -77,11 +77,11 @@ public class DBRepository {
                 .eq(DBgroups.NAME_COLUMN, name)
                 .query();
     }
-    public List<DBinfoStudent> getStudentsByName(String name) throws SQLException {
+    public DBinfoStudent getStudentsByName(String name) throws SQLException {
         return studentDao.queryBuilder()
                 .where()
                 .eq(DBinfoStudent.NAME_COLUMN, name)
-                .query();
+                .query().get(0);
     }
 
     public void close() throws Exception {

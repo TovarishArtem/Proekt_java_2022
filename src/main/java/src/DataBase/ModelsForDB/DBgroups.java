@@ -8,11 +8,11 @@ public class DBgroups {
 
     public static final String NAME_COLUMN = "name";
 
-/*    @DatabaseField(generatedId = true)
-    private Integer id;*/
+    @DatabaseField( generatedId = true )
+    private Integer id;
 
 
-    @DatabaseField(id = true, unique = true,  canBeNull = false)
+    @DatabaseField(canBeNull = false)
     private String name;
 
 
@@ -30,16 +30,16 @@ public class DBgroups {
     public void setName(String name) {
         this.name = name;
     }
-   /* public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }*/
+    }
     public String toString() {
         return "DBinfoStudent{" +
-                /*"Id=" + id +*/
+                "Id=" + id +
                 ", name='" + name
                 ;
     }

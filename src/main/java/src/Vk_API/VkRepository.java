@@ -19,7 +19,7 @@ import java.util.*;
 public class VkRepository {
     public  LinkedHashMap<String, Person> studentInfo = new LinkedHashMap<>();
     private final int APP_ID = 51492888;
-    private final String CODE = "vk1.a.hQLWV0Dz4A4HNeB9VF67KInOgVz9SSVuXFWnpgU4_ksunqE1LsvkxGloWaz1IwflYzIBBSRf3lwvtlLZvDQ7rlRNSr2mrt_82Ck7wiczOcD7uW7XGzZTRIYjlZjGXsPN-TsuyHD82rGoOR_ScW04-NK5jcK2ujg5SEyFg5vK9_ON6hmb58-DmczLoWdtiJ-g";
+    private final String CODE = "vk1.a.ZoH-49mrp8Zy3uNWcKjv-aDDMMzrnVYE9pfLnk7JTe9uutPEvunRavmUb_ZoAWIpKeB7YXeQul-f5aokbQdkhyQdhmSbkyY12K3TmUZK1QvqhAMqbYnvzgk8a8PgbIbpdXHQyebS-r4loLr74J9hOtxuJNgUTPEuSYGynSbpVR3n-zHoyusSfXLq0osPjMlj";
     private final VkApiClient vk;
     private final UserActor actor;
 
@@ -62,26 +62,27 @@ public class VkRepository {
 
     public UserFull getId(Group group1, Group group2, Group group3, String name) throws ClientException, ApiException, InterruptedException {
 
-
+        Thread.sleep(4000);
         UserFull result = vk.users()
                 .search(actor)
+                .groupId(group1.getId())
                 .q(name)
                 .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
-                .groupId(group1.getId())
                 .count(1)
                 .execute()
                 .getItems()
                 .stream()
                 .findFirst()
                 .orElse(null);
-        Thread.sleep(300);
+        Thread.sleep(4000);
         if (result == null){
-            Thread.sleep(200);
+            Thread.sleep(4000);
             result =  vk.users()
                     .search(actor)
-                    .q(name)
-                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
                     .groupId(group2.getId())
+                    .q(name)
+
+                    .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
                     .count(1)
                     .execute()
                     .getItems()
@@ -90,12 +91,13 @@ public class VkRepository {
                     .orElse(null);
         }
         if (result == null){
-            Thread.sleep(280);
+            Thread.sleep(4000);
             return  vk.users()
                     .search(actor)
+                    .groupId(group3.getId())
                     .q(name)
                     .fields(Fields.CITY, Fields.BDATE, Fields.SEX)
-                    .groupId(group3.getId())
+
                     .count(1)
                     .execute()
                     .getItems()
