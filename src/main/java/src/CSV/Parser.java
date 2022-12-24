@@ -67,7 +67,7 @@ public class Parser {
 
         return getModule;
     }
-    public static  Integer[] getReportForVis(String path) throws IOException, ClientException, ApiException {
+    public static  Double[] getReportForVis(String path) throws IOException, ClientException, ApiException {
         Scanner sc = getScanner(path);
 
         var headersOfModules = sc.nextLine().split(";"); // название модулей
@@ -79,17 +79,17 @@ public class Parser {
          ArrayList<ModuleStatistics> module = new ArrayList<>();
 
 
-        List<Integer> list = new ArrayList<>();
-        List<Integer> listSum = new ArrayList<>();
+        List<Double> list = new ArrayList<>();
+        List<Double> listSum = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            listSum.add(0);
+            listSum.add(0.0);
         }
 
-        Integer[] list3 = null;
+        Double[] list3 = null;
         // преобразуем лист в массив
-        Integer[] listSum2 = new Integer[listSum.size()];
+        Double[] listSum2 = new Double[listSum.size()];
         var listSum3 = listSum.toArray(listSum2);
-        List<Integer> list1 = new ArrayList<>();
+        List<Double> list1 = new ArrayList<>();
         var index = 0;
         while (sc.hasNextLine()) {
             var headersOfScoresModulesStudent = sc.nextLine().split(";"); // имя, оценки студента
@@ -106,14 +106,14 @@ public class Parser {
 
                 }
             }
-            Integer[] wordsArray1 = new Integer[list1.size()];
+            Double[] wordsArray1 = new Double[list1.size()];
             list3 = list1.toArray(wordsArray1);
 
             for(var m : module){
                     list.add(m.getScore());
             }
             // преобразуем лист в массив
-            Integer[] wordsArray = new Integer[list.size()];
+            Double[] wordsArray = new Double[list.size()];
             var list2 = list.toArray(wordsArray);
 
             for (var i = 0; i < listSum3.length; i++){
@@ -171,13 +171,7 @@ public class Parser {
                 list.add(task.getScore());
                 unique.add(task.getName()); // лист названий упражнений
             }
-            // получение максимальных баллов
-            if (index == 0){
-                for(var m : listTasks){
-                    list1.add(m.getMaxScore());
 
-                }
-            }
             // преобразую  листы в массивы
             Integer[] wordsArray = new Integer[list.size()];
             var list2 = list.toArray(wordsArray);
@@ -185,7 +179,7 @@ public class Parser {
             Integer[] wordsArray1 = new Integer[list1.size()];
             list3 = list1.toArray(wordsArray1);
             var count = 1;
-            // счет суммы баллов по каждому таску
+            // сумма решивших упражнений студента
                 for (var j = 0; j < list2.length; j++ ){
                     if (list2[j] > 0){
                         listSum3[j] = (listSum3[j] + count) ;
@@ -198,7 +192,7 @@ public class Parser {
         var i = 0;
             for (var title: unique){
 
-                map.put(title, listSum3[i] * 100 / index ); // (название упр. ,  процентное соотношение  кол-во решивших от всех студентов)
+                map.put(title, listSum3[i] * 100 / index ); // (название упр. ,  процентное соотношение  кол-во решивших  от всех студентов)
                 i++;
             }
         return map;
@@ -221,7 +215,7 @@ public class Parser {
             Student stud = new Student(name, group);
             var  scoreOfStudent = getModuleforVis3(headersOfModules, headersOfExercises, headersOfScoresModulesStudent, headersOfMaxScores, stud, name1);
             assert scoreOfStudent != null;
-            scoreList.add(scoreOfStudent.getScore() * 100 / scoreOfStudent.getMaxScore());
+            scoreList.add(scoreOfStudent.getScore() * 100 / scoreOfStudent.getMaxScore()); // на сколько процентов решен модуль
         }
 
         return scoreList;
@@ -252,14 +246,14 @@ public class Parser {
         return student;
     }
     private static ArrayList<ModuleStatistics> getModuleforVis(String[] headers,String[] headersOfExercises,  String[] headersOfScoresModulesStudent, String[] headersOfMaxScores, Student student  ){
-        int maxscoreOfExercises = 0;
-        int maxscoreOfActivities = 0;
-        int maxScoreOfSeminars = 0;
-        int maxScoreOfHomeworks = 0;
-        int maxScoreOfActivitiesSudent = 0;
-        int maxScoreOfHomeworksSudent = 0;
-        int maxscoreOfExercisesSudent = 0;
-        int maxScoreOfSeminarsStudent = 0;
+        double maxscoreOfExercises = 0;
+        double maxscoreOfActivities = 0;
+        double maxScoreOfSeminars = 0;
+        double maxScoreOfHomeworks = 0;
+        double maxScoreOfActivitiesSudent = 0;
+        double maxScoreOfHomeworksSudent = 0;
+        double maxscoreOfExercisesSudent = 0;
+        double maxScoreOfSeminarsStudent = 0;
 
         LinkedHashMap< ArrayList<ModuleStatistics>, ArrayList<ModuleStatistics>> moduleforVis = new LinkedHashMap<>();
         ArrayList<ModuleStatistics> modules = new ArrayList<>();
@@ -292,8 +286,8 @@ public class Parser {
             if (headersOfExercises[j].equals("Сем")) {
                 countModule = j + 1;
                 if (i == 0){
-                    maxScoreOfSeminars = Integer.parseInt(headersOfMaxScores[j]);
-                    maxScoreOfSeminarsStudent = Integer.parseInt(headersOfScoresModulesStudent[j]);
+                    maxScoreOfSeminars = Double.parseDouble(headersOfMaxScores[j]);
+                    maxScoreOfSeminarsStudent = Double.parseDouble(headersOfScoresModulesStudent[j]);
                     nameModule = headers[countModule];
                     i++;
                     continue;
@@ -303,8 +297,8 @@ public class Parser {
 
                     countModule = headers.length - 1;
                 }
-                Integer score = maxscoreOfExercisesSudent + maxScoreOfActivitiesSudent + maxScoreOfHomeworksSudent + maxScoreOfSeminarsStudent;
-                Integer max = maxscoreOfExercises + maxscoreOfActivities + maxScoreOfHomeworks + maxScoreOfSeminars;
+                Double score = maxscoreOfExercisesSudent + maxScoreOfActivitiesSudent + maxScoreOfHomeworksSudent + maxScoreOfSeminarsStudent;
+                Double max = maxscoreOfExercises + maxscoreOfActivities + maxScoreOfHomeworks + maxScoreOfSeminars;
                 ModuleStatistics module = new ModuleStatistics(nameModule , score, max );
                 modules.add(module);
 

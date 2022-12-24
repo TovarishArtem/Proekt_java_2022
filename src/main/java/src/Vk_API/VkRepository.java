@@ -18,8 +18,8 @@ import java.util.*;
 
 public class VkRepository {
     public  LinkedHashMap<String, Person> studentInfo = new LinkedHashMap<>();
-    private final int APP_ID = 0;
-    private final String CODE = "";
+    private final int APP_ID = 56565;
+    private final String CODE = "ggeg";
     private final VkApiClient vk;
     private final UserActor actor;
 

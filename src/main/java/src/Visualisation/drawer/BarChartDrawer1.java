@@ -24,15 +24,15 @@ import java.util.LinkedHashMap;
 public class BarChartDrawer1 extends JFrame {
     public BarChartDrawer1(String title, LinkedHashMap<Person, Integer> mapPerson, String nameModule) {
         super(title);
-        setContentPane(createPlayersByTeamsPanel(mapPerson, nameModule));
+        setContentPane(createStudentByTasksModulePanel(mapPerson, nameModule));
         setExtendedState(JFrame.HEIGHT);
 
         setSize(1920, 1080);
     }
 
-    public static JPanel createPlayersByTeamsPanel(LinkedHashMap<Person, Integer> mapPerson,  String nameModule)
+    public static JPanel createStudentByTasksModulePanel(LinkedHashMap<Person, Integer> mapPerson, String nameModule)
     {
-        JFreeChart chart = createBarChart(ChartDataMapper.createFollowersDataset1(mapPerson), nameModule);
+        JFreeChart chart = createBarChart(ChartDataMapper.createStudentByTasksModuleDataset(mapPerson), nameModule);
         chart.setPadding(new RectangleInsets(4, 8, 2, 2));
 
 

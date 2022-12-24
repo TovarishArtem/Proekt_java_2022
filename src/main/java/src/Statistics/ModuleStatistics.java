@@ -4,13 +4,13 @@ public class ModuleStatistics {
 
 
     private String name;
-    private int score;
+    private Double score;
 
 
 
-    private int maxScore;
+    private Double maxScore;
 
-    public ModuleStatistics(String name, int score , int maxScore) {
+    public ModuleStatistics(String name, Double score , Double maxScore) {
         this.name = name;
         this.score = score;
         this.maxScore = maxScore;
@@ -22,19 +22,19 @@ public class ModuleStatistics {
     public void setName(String name) {
         this.name = name;
     }
-    public int getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
-    public int getMaxScore() {
+    public Double getMaxScore() {
         return maxScore;
     }
 
-    public void setMaxScore(int maxScore) {
+    public void setMaxScore(Double maxScore) {
         this.maxScore = maxScore;
     }
 }

@@ -48,14 +48,14 @@ public class Main {
         // процент прохождения модулей
         var percentModules = Parser.getReportForVis("rawdata/basicprogramming_2.csv");
 
-        LinkedHashMap<String, Integer> nameMosules = new LinkedHashMap<>();
+        LinkedHashMap<String, Double> nameMosules = new LinkedHashMap<>();
         var i = 0;
         for (var module : modules) {
             nameMosules.put(module.getName(), percentModules[i]);
             i++;
         }
         // на
-        var min = 1000000;
+        var min = 1000000.0;
         for (var j : nameMosules.keySet()){
             if (nameMosules.get(j) < min) {
                 min = nameMosules.get(j);
@@ -113,6 +113,7 @@ public class Main {
         }
 
        new PieChartDrawer("Модули", nameMosules).setVisible(true);
+
        new BarChartDrawer("Модуль", task, name).setVisible(true);
        new BarChartDrawer1("Модуль", mapPerson, name).setVisible(true);
 
